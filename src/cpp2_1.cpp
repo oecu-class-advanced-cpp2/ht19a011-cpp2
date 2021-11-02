@@ -16,10 +16,30 @@ using namespace std;
 */
 /* -------------------------------------------------------------- */
 
-
+bool Prime(unsigned int a) {
+	for (int i = 2; i < a; i++) {
+		if (a%i == 0) {
+			return(false);
+		}
+		return(true);
+	}
+}
 
 int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
+	int count = 0;
+	int number = 0;
+	while (number < CPP2_PRIME_UPPER_LIMIT) {
+		a = a + number*d;
+		number++;
+		std::cout << a << std::endl;
+		if (Prime(a)) {
+			count++;
 
+		}
+		if (count == n) {
+			return (a);
+		}
+	}return(1);
 };
 
 
