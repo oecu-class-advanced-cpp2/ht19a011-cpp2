@@ -16,36 +16,42 @@ using namespace std;
 */
 /* -------------------------------------------------------------- */
 
-bool Prime(unsigned int a) {
-	for (int i = 2; i < a; i++) {
+bool is_prime(unsigned int a) {
+	for (unsigned int i = 2; i < a; i++) {
 		if (a%i == 0) {
-			return(false);
+			return true;
+			//cout << "cnt" <<i<< endl;
 		}
-		return(true);
-	}
+	}return false;
 }
 
 int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
 	int count = 0;
 	int number = 0;
-	while (number < CPP2_PRIME_UPPER_LIMIT) {
-		a = a + number*d;
-		number++;
-		std::cout << a << std::endl;
-		if (Prime(a)) {
-			count++;
+	bool test = 0;
+	while (a < CPP2_PRIME_UPPER_LIMIT) {
+		//unsigned int ki = a + number*d;
+		//number++;
 
-		}
+		//素数判定
+			if (is_prime(a) == false) {
+				//cout << "count" << endl;
+				count++;
+			}
+		
 		if (count == n) {
-			return (a);
+			//cout << "cnt" << count << endl;
+			return a;
 		}
-	}return(1);
+		a += d;
+	}return 0;
 };
 
 
 
 int main() {
 	std::cout << nth_prime(367, 186, 151) << std::endl;
+	std::cout << nth_prime(179, 10, 203) << std::endl;
 	// 以下、同様に、入出力例通りになるか確認せよ。
-	return 0;
+	//return 0;
 }
