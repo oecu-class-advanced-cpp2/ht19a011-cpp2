@@ -16,33 +16,31 @@ using namespace std;
 */
 /* -------------------------------------------------------------- */
 
+//素数判定
+//与えられた数値未満の数で割り、あまりを確認する
 bool is_prime(unsigned int a) {
 	for (unsigned int i = 2; i < a; i++) {
 		if (a%i == 0) {
-			return true;
-			//cout << "cnt" <<i<< endl;
+			return false;
 		}
-	}return false;
+	}
+	if (a == 1) {
+		return false;
+	}return true;
 }
 
 int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
 	int count = 0;
-	int number = 0;
-	bool test = 0;
 	while (a < CPP2_PRIME_UPPER_LIMIT) {
-		//unsigned int ki = a + number*d;
-		//number++;
 
 		//素数判定
-			if (is_prime(a) == false) {
-				//cout << "count" << endl;
-				count++;
+			if (is_prime(a) == true) {
+				if (--n == 0) {
+					return a;
+				}
 			}
 		
-		if (count == n) {
-			//cout << "cnt" << count << endl;
-			return a;
-		}
+		//等差の足し算
 		a += d;
 	}return 0;
 };
@@ -52,6 +50,15 @@ int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
 int main() {
 	std::cout << nth_prime(367, 186, 151) << std::endl;
 	std::cout << nth_prime(179, 10, 203) << std::endl;
-	// 以下、同様に、入出力例通りになるか確認せよ。
+	std::cout << nth_prime(271, 37, 39) << std::endl;
+	std::cout << nth_prime(103, 230, 1) << std::endl;
+	std::cout << nth_prime(27, 104, 185) << std::endl;
+	std::cout << nth_prime(253, 50, 85) << std::endl;
+	std::cout << nth_prime(1, 1, 1) << std::endl;
+	std::cout << nth_prime(9075, 337, 210) << std::endl;
+	std::cout << nth_prime(307, 24, 79) << std::endl;
+	std::cout << nth_prime(331, 221, 177)<< std::endl;
+	std::cout << nth_prime(259, 170, 40) << std::endl;
+	std::cout << nth_prime(269, 58, 102) << std::endl;
 	//return 0;
 }
