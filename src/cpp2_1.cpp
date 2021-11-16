@@ -16,9 +16,9 @@
 /* -------------------------------------------------------------- */
 
 //素数判定
-//与えられた数値未満の数で割り、あまりを確認する
+//与えられた数値の平方根までの数で割り、あまりを確認する
 bool is_prime(unsigned int a) {
-	for (unsigned int i = 2; i < sqrt(a); i++) {
+	for (unsigned int i = 2; i <= sqrt(a); i++) {
 		if (a%i == 0) {
 			return false;
 		}
