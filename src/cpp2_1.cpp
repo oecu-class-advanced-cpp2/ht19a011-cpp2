@@ -1,6 +1,5 @@
 // cpp2_1.cpp
 #include <iostream>
-using namespace std;
 
 #define CPP2_PRIME_UPPER_LIMIT 1000000 //探索する値の上限値。
 
@@ -19,7 +18,7 @@ using namespace std;
 //素数判定
 //与えられた数値未満の数で割り、あまりを確認する
 bool is_prime(unsigned int a) {
-	for (unsigned int i = 2; i < a; i++) {
+	for (unsigned int i = 2; i < sqrt(a); i++) {
 		if (a%i == 0) {
 			return false;
 		}
@@ -32,14 +31,12 @@ bool is_prime(unsigned int a) {
 int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
 	int count = 0;
 	while (a < CPP2_PRIME_UPPER_LIMIT) {
-
 		//素数判定
 			if (is_prime(a) == true) {
 				if (--n == 0) {
 					return a;
 				}
 			}
-		
 		//等差の足し算
 		a += d;
 	}return 0;
