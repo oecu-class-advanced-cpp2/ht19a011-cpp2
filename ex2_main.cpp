@@ -1,6 +1,8 @@
 // ex2_main.cpp
 #include <iostream>
 #include <string>
+#include<string.h>
+#include<vector>
 namespace cpp2 {
 	/* --------------------------------------------------------------------- */
 	/*
@@ -9,8 +11,37 @@ namespace cpp2 {
 	*/
 	/* --------------------------------------------------------------------- */
 	class mcxi {
-
+	public:
+		int num;
+		mcxi(std::string);
+		std::string to_string() { return "m"; };
 	};
+	mcxi::mcxi(std::string s) {
+		for (unsigned int i = 0; i < s.size() - 1; i++) {
+			if ('0' <= s[i] && s[i] <= '9') {
+				num = s[i] * 1;
+			}
+			else {
+				switch (s[i])
+				{
+				case 'm':
+					num *= 1000;
+				case 'c':
+					num *= 100;
+				case 'x':
+					num *= 10;
+				case 'i':
+					num *= 1;
+
+				}
+			}
+		}
+	}
+	mcxi operator+  (mcxi a, mcxi b) {
+		mcxi test("55");
+		return test;
+	}
+
 } // namespace cpp2
 int main() {
 	cpp2::mcxi a0("xi");
@@ -25,8 +56,7 @@ int main() {
 	cpp2::mcxi b2("4c8x8i");
 	cpp2::mcxi result2 = a2 + b2;
 	std::cout << "6cx" << " " << result2.to_string() << std::endl;
-	3
-		cpp2::mcxi a3("m2ci");
+	cpp2::mcxi a3("m2ci");
 	cpp2::mcxi b3("4m7c9x8i");
 	cpp2::mcxi result3 = a3 + b3;
 	std::cout << "5m9c9x9i" << " " << result3.to_string() << std::endl;
