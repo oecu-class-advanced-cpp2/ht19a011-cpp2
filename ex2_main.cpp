@@ -14,14 +14,16 @@ namespace cpp2 {
 	public:
 		int num;
 		mcxi(std::string);
-		std::string to_string() { return "m"; };
+		std::string to_string();
 	};
 	mcxi::mcxi(std::string s) {
-		for (unsigned int i = 0; i < s.size() - 1; i++) {
+		for (unsigned int i = 0; i < s.length() - 1; i++) {
 			if ('0' <= s[i] && s[i] <= '9') {
-				num = s[i] * 1;
+				num += int(s[i] - '0');
+				std::cout << s[i] << "aa" << num << std::endl;
 			}
 			else {
+				if (num == 0) { num++; }
 				switch (s[i])
 				{
 				case 'm':
@@ -32,14 +34,19 @@ namespace cpp2 {
 					num *= 10;
 				case 'i':
 					num *= 1;
-
 				}
 			}
-		}
+		}std::cout << "sna" << num << std::endl;
 	}
+
+	std::string mcxi::to_string() {
+		std::string str;
+		return("m");
+	}
+
 	mcxi operator+  (mcxi a, mcxi b) {
-		mcxi test("55");
-		return test;
+		mcxi temp("55");
+		return temp;
 	}
 
 } // namespace cpp2
