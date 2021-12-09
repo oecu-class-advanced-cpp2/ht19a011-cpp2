@@ -69,5 +69,5 @@ int main() {
 	test(nth_prime(331, 221, 177));
 	test(nth_prime(259, 170, 40));
 	test(nth_prime(269, 58, 102));
-	//return 0;
+	return 0;
 }
