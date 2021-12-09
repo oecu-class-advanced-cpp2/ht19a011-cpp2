@@ -29,7 +29,6 @@ bool is_prime(unsigned int a) {
 }
 
 int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
-	int count = 0;
 	while (a < CPP2_PRIME_UPPER_LIMIT) {
 		//‘f””»’è
 			if (is_prime(a) == true) {
@@ -45,7 +44,6 @@ int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
 void test(int prime) {
 	int answer[12] = { 92809,6709,12037,103,93523,14503,2,899429,5107,412717,22699,25673 } ;
 	static int count = 0;
-	int counter = count;
 	std::cout << "nth_prime=" << prime << " answer=" << answer[count] ;
 	if (prime == answer[count]) {
 		std::cout << " true" << std::endl;
