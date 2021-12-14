@@ -16,6 +16,7 @@ namespace cpp2 {
 		int value_;
 		mcxi(std::string);
 		std::string to_string();
+		int unit(char);
 		void debug();
 	};
 	mcxi::mcxi(std::string s) :value_(0) {
@@ -27,43 +28,38 @@ namespace cpp2 {
 				num += int(s[count] - '0');
 				//std::cout << s[count] << "aa" << num << std::endl;
 				count++;
-				switch (s[count])
-				{
-				case 'm':
-					num *= 1000;
-				case 'c':
-					num *= 100;
-				case 'x':
-					num *= 10;
-				case 'i':
-					num *= 1;
-				}count++;
+				num *= unit(s[count]);
+				count++;
 				value_ += num;
 			}
 			else {
-				switch (s[count])
-				{
-				case 'm':
-					num = 1000;
-					break;
-				case 'c':
-					num = 100;
-					break;
-				case 'x':
-					num = 10;
-					break;
-				case 'i':
-					num = 1;
-					break;
-				}
+				num = unit(s[count]);
 				count++;
 				value_ += num;
-				std::cout << "value" << value_ << std::endl;
+				//std::cout << "value" << value_ << std::endl;
 			}
 		}
 	}
+	int mcxi::unit(char s) {
+		switch (s)
+		{
+		case 'm':
+			return 1000;
+			break;
+		case 'c':
+			return  100;
+			break;
+		case 'x':
+			return  10;
+			break;
+		case 'i':
+			return  1;
+			break;
+		}
+	}
+
 	void mcxi::debug() {
-		std::cout << "kkk" << value_ << std::endl;
+		std::cout << "value_" << value_ << std::endl;
 	}
 
 	std::string mcxi::to_string() {
@@ -77,6 +73,27 @@ namespace cpp2 {
 			}
 			str += 'm';
 		}
+		if (num > 99) {
+			if (num / 100 != 1) {
+				str += num / 100;
+				num = num % 100;
+			}
+			str += 'c';
+		}
+		if (num > 9) {
+			if (num / 10 != 1) {
+				str += num / 10;
+				num = num % 10;
+			}
+			str += 'x';
+		}
+		if (num > 0) {
+			if (num != 1) {
+				str += num;
+				num = 0;
+			}
+			str += 'i';
+		}
 		return(str);
 	}
 
@@ -89,13 +106,16 @@ namespace cpp2 {
 int main() {
 	cpp2::mcxi a0("xi");
 	a0.debug();
+	std::cout << "str:" << a0.to_string() << std::endl;
 	cpp2::mcxi b0("x9i");
 	b0.debug();
+	std::cout << "str:" << b0.to_string() << std::endl;
 	cpp2::mcxi result0 = a0 + b0;
 	result0.debug();
 	std::cout << "3x" << " " << result0.to_string() << std::endl;
 	cpp2::mcxi a1("i");
 	a1.debug();
+	std::cout << "str:" << a1.to_string() << std::endl;
 	cpp2::mcxi b1("9i");
 	b1.debug();
 	cpp2::mcxi result1 = a1 + b1;
