@@ -68,28 +68,28 @@ namespace cpp2 {
 		int temp = 0;
 		if (num > 999) {
 			if (num / 1000 != 1) {
-				str += num / 1000;
+				str += std::to_string(num / 1000);
 				num = num % 1000;
 			}
 			str += 'm';
 		}
 		if (num > 99) {
 			if (num / 100 != 1) {
-				str += num / 100;
+				str += std::to_string(num / 100);
 				num = num % 100;
 			}
 			str += 'c';
 		}
 		if (num > 9) {
 			if (num / 10 != 1) {
-				str += num / 10;
+				str += std::to_string(num / 10);
 				num = num % 10;
 			}
 			str += 'x';
 		}
 		if (num > 0) {
 			if (num != 1) {
-				str += num;
+				str += std::to_string(num);
 				num = 0;
 			}
 			str += 'i';
@@ -98,6 +98,7 @@ namespace cpp2 {
 	}
 
 	mcxi operator+  (mcxi a, mcxi b) {
+		int value_ = a.value_ + b.value_;
 		mcxi temp("");
 		return temp;
 	}
