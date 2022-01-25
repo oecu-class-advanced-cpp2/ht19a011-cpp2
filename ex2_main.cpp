@@ -32,7 +32,7 @@ namespace cpp2 {
 				count++;
 				value_ += num;
 			}
-			else {
+			else if (s[count] == 'm' || s[count] == 'c' || s[count] == 'x' || s[count] == 'i') {
 				num = unit(s[count]);
 				count++;
 				value_ += num;
@@ -106,7 +106,25 @@ namespace cpp2 {
 	}
 
 } // namespace cpp2
+
+void test(std::string mcxi_a, std::string mcxi_b, std::string result) {
+	cpp2::mcxi a0(mcxi_a);
+	cpp2::mcxi b0(mcxi_b);
+	cpp2::mcxi result0 = a0 + b0;
+	//check(result0.to_string(), result);
+	if (result0.to_string() == result) {
+		std::cout << "ok" << std::endl;
+	}
+}
+
+void check(std::string a, std::string b) {
+	if (a == b) {
+		std::cout << "ok" << std::endl;
+	}
+}
+
 int main() {
+	test("xi", "x9i", "3x");
 	cpp2::mcxi a0("xi");
 	a0.debug();
 	std::cout << "str:" << a0.to_string() << std::endl;
