@@ -12,12 +12,13 @@ namespace cpp2 {
 	/* --------------------------------------------------------------------- */
 	class mcxi {
 	public:
-		//int num;
 		int value_;
+		std::string sortmcxi = "";
 		mcxi(std::string);
 		std::string to_string();
 		int unit(char);
 		void debug();
+		bool mcxi_check(char, std::string);
 	};
 	mcxi::mcxi(std::string s) :value_(0) {
 		int count = 0;
@@ -28,17 +29,18 @@ namespace cpp2 {
 				num += int(s[count] - '0');
 				count++;
 				num *= unit(s[count]);
-				count++;
-				value_ += num;
 			}
 			else if (s[count] == 'm' || s[count] == 'c' || s[count] == 'x' || s[count] == 'i') {
-				num = unit(s[count]);
-				count++;
-				value_ += num;
+				if (mcxi_check(s[count], sortmcxi)) {
+					sortmcxi += s[count];
+					num = unit(s[count]);
+				}
 			}
 			else {
-
+				std::cout << "•s“KØ‚È“ü—Í:" << s[count] << std::endl;
 			}
+			count++;
+			value_ += num;
 		}
 	}
 	int mcxi::unit(char s) {
@@ -57,6 +59,59 @@ namespace cpp2 {
 			return  1;
 			break;
 		}
+	}
+	bool mcxi::mcxi_check(char s, std::string mcxi_sort) {
+		int mcxiPos = mcxi_sort.find(s);
+		if (mcxiPos == std::string::npos) {
+			std::cout << "okk" << std::endl;
+			int sortc = 0;
+			int sortx = 0;
+			int sorti = 0;
+			switch (s)
+			{
+			case 'm':
+				sortc = mcxi_sort.find('c');
+				sortx = mcxi_sort.find('x');
+				sorti = mcxi_sort.find('i');
+				if (sortc == std::string::npos&&sortx == std::string::npos&&sorti == std::string::npos) {
+					return true;
+				}
+				else {
+					std::cout << "chou:m" << std::endl;
+					return false;
+				}
+				break;
+			case 'c':
+				sortx += mcxi_sort.find('x');
+				sorti += mcxi_sort.find('i');
+
+				if (sortx == std::string::npos&&sorti == std::string::npos) {
+					return true;
+
+				}
+				else {
+					std::cout << "chou:c" << std::endl;
+					return false;
+				}
+				break;
+			case 'x':
+				sorti += mcxi_sort.find('i');
+				if (sorti == std::string::npos) {
+
+					return true;
+				}
+				else {
+					std::cout << "chou:x" << std::endl;
+					return false;
+				}
+				break;
+			case 'i':
+				return  true;
+				break;
+			}
+		}
+		std::cout << "d•¡:" << s << std::endl;
+		return false;
 	}
 
 	void mcxi::debug() {
@@ -81,8 +136,6 @@ namespace cpp2 {
 		str += st(num, 100, "c");
 		str += st(num, 10, "x");
 		str += st(num, 1, "i");
-
-
 		return(str);
 	}
 
@@ -100,18 +153,11 @@ void test(std::string mcxi_a, std::string mcxi_b, std::string result) {
 	cpp2::mcxi a0(mcxi_a);
 	cpp2::mcxi b0(mcxi_b);
 	cpp2::mcxi result0 = a0 + b0;
-	//check(result0.to_string(), result);
 	if (result0.to_string() == result) {
 		std::cout << "ok" << std::endl;
 	}
 	else {
 		std::cout << "no" << std::endl;
-	}
-}
-
-void check(std::string a, std::string b) {
-	if (a == b) {
-		std::cout << "ok" << std::endl;
 	}
 }
 
@@ -126,4 +172,5 @@ int main() {
 	test("i", "m", "mi");
 	test("m9i", "i", "mx");
 	test("9m8c7xi", "c2x8i", "9m9c9x9i");
+	test("mic", "cpc", "bbb");
 }
