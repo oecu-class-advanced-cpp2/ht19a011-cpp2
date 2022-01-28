@@ -19,28 +19,30 @@ namespace cpp2 {
 		int unit(char);
 		void debug();
 		bool mcxi_check(char, std::string);
+		bool mcxi_sorter(char, std::string);
 	};
 	mcxi::mcxi(std::string s) :value_(0) {
 		int count = 0;
-		while (count<s.length())
+		int num = 1;
+		while (count < s.length())
 		{
-			int num = 0;
+
 			if ('0' <= s[count] && s[count] <= '9') {
-				num += int(s[count] - '0');
-				count++;
-				num *= unit(s[count]);
+				num *= int(s[count] - '0');;
 			}
 			else if (s[count] == 'm' || s[count] == 'c' || s[count] == 'x' || s[count] == 'i') {
 				if (mcxi_check(s[count], sortmcxi)) {
 					sortmcxi += s[count];
-					num = unit(s[count]);
+					num *= unit(s[count]);
+					value_ += num;
+					num = 1;
 				}
 			}
 			else {
 				std::cout << "不適切な入力:" << s[count] << std::endl;
 			}
 			count++;
-			value_ += num;
+
 		}
 	}
 	int mcxi::unit(char s) {
@@ -63,64 +65,63 @@ namespace cpp2 {
 	bool mcxi::mcxi_check(char s, std::string mcxi_sort) {
 		int mcxiPos = mcxi_sort.find(s);
 		if (mcxiPos == std::string::npos) {
-			std::cout << "okk" << std::endl;
-			int sortc = 0;
-			int sortx = 0;
-			int sorti = 0;
-			switch (s)
-			{
-			case 'm':
-				sortc = mcxi_sort.find('c');
-				sortx = mcxi_sort.find('x');
-				sorti = mcxi_sort.find('i');
-				if (sortc == std::string::npos&&sortx == std::string::npos&&sorti == std::string::npos) {
-					return true;
-				}
-				else {
-					std::cout << "chou:m" << std::endl;
-					return false;
-				}
-				break;
-			case 'c':
-				sortx += mcxi_sort.find('x');
-				sorti += mcxi_sort.find('i');
-
-				if (sortx == std::string::npos&&sorti == std::string::npos) {
-					return true;
-
-				}
-				else {
-					std::cout << "chou:c" << std::endl;
-					return false;
-				}
-				break;
-			case 'x':
-				sorti += mcxi_sort.find('i');
-				if (sorti == std::string::npos) {
-
-					return true;
-				}
-				else {
-					std::cout << "chou:x" << std::endl;
-					return false;
-				}
-				break;
-			case 'i':
-				return  true;
-				break;
-			}
+			return(mcxi_sorter(s, mcxi_sort));
 		}
 		std::cout << "重複:" << s << std::endl;
 		return false;
 	}
 
-	void mcxi::debug() {
-		std::cout << "value_" << value_ << std::endl;
+	bool mcxi::mcxi_sorter(char s, std::string mcxi_sort) {
+		int sortc = 0;
+		int sortx = 0;
+		int sorti = 0;
+		switch (s)
+		{
+		case 'm':
+			sortc = mcxi_sort.find('c');
+			sortx = mcxi_sort.find('x');
+			sorti = mcxi_sort.find('i');
+			if (sortc == std::string::npos&&sortx == std::string::npos&&sorti == std::string::npos) {
+				return true;
+			}
+			else {
+				std::cout << "順番:m" << std::endl;
+				return false;
+			}
+			break;
+		case 'c':
+			sortx += mcxi_sort.find('x');
+			sorti += mcxi_sort.find('i');
+
+			if (sortx == std::string::npos&&sorti == std::string::npos) {
+				return true;
+
+			}
+			else {
+				std::cout << "順番:c" << std::endl;
+				return false;
+			}
+			break;
+		case 'x':
+			sorti += mcxi_sort.find('i');
+			if (sorti == std::string::npos) {
+
+				return true;
+			}
+			else {
+				std::cout << "順番:x" << std::endl;
+				return false;
+			}
+			break;
+		case 'i':
+			return  true;
+			break;
+		}
 	}
 
 	std::string st(int& num, int div, std::string mcxi) {
 		std::string str;
-		if (num > div - 1) {
+		if (num >= div) {
 			if (num / div != 1) {
 				str += std::to_string(num / div);
 			}num = num % div;
@@ -128,6 +129,7 @@ namespace cpp2 {
 		}
 		return str;
 	}
+
 
 	std::string mcxi::to_string() {
 		std::string str = "";
@@ -141,18 +143,22 @@ namespace cpp2 {
 
 	mcxi operator+  (mcxi a, mcxi b) {
 		int value_ = a.value_ + b.value_;
-
 		mcxi temp("");
 		temp.value_ = value_;
 		return temp;
 	}
 
+	void mcxi::debug() {
+		std::cout << "value_" << value_ << std::endl;
+	}
 } // namespace cpp2
 
 void test(std::string mcxi_a, std::string mcxi_b, std::string result) {
+	std::cout << "テストケース:" << mcxi_a << "," << mcxi_b << "," << result << std::endl;
 	cpp2::mcxi a0(mcxi_a);
 	cpp2::mcxi b0(mcxi_b);
 	cpp2::mcxi result0 = a0 + b0;
+	//	a0.debug(); b0.debug();
 	if (result0.to_string() == result) {
 		std::cout << "ok" << std::endl;
 	}
@@ -172,5 +178,5 @@ int main() {
 	test("i", "m", "mi");
 	test("m9i", "i", "mx");
 	test("9m8c7xi", "c2x8i", "9m9c9x9i");
-	test("mic", "cpc", "bbb");
+	test("mi9c", "cpc", "bbb");
 }
