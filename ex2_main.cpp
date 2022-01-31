@@ -27,7 +27,7 @@ namespace cpp2 {
 		while (count < s.length())
 		{
 
-			if ('0' <= s[count] && s[count] <= '9') {
+			if ('2' <= s[count] && s[count] <= '9') {
 				num *= int(s[count] - '0');;
 			}
 			else if (s[count] == 'm' || s[count] == 'c' || s[count] == 'x' || s[count] == 'i') {
